@@ -49,3 +49,5 @@ $AVG_WRITE_BW   = $TOTAL_WRITE_BW / $NUMFILES
 Write-Host "Average Write Bandwidth (MB/s): $($AVG_WRITE_BW)"
 
 ```
+
+![alt text](image.png)
