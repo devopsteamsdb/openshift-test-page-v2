@@ -46,6 +46,29 @@ def fio():
         fio_output = f"Error running fio: {result.stderr}"
 
     return render_template('fio.html', name=socket.gethostname(), fio_output=fio_output)
+
+@app.route('/fiojson')
+def fiojson():
+    size = request.args.get('size')
+    numjobs = request.args.get('numjobs')
+    
+    rw = request.args.get('rw')
+    blocksize = request.args.get('blocksize')
+    ioengine = request.args.get('ioengine')
+    directory = request.args.get('directory')
+    runtime = request.args.get('runtime')
+    
+    conteinername= socket.gethostname()
+    
+    fio_command = f"fio --name={conteinername}-{size}-{numjobs} --rw={rw} --blocksize={blocksize} --ioengine={ioengine} --directory={directory} --size={size} --numjobs={numjobs} --runtime={runtime} --output=json"
+    result = subprocess.run(fio_command.split(), capture_output=True, text=True)
+
+    if result.returncode == 0:
+        fio_output = result.stdout
+    else:
+        fio_output = f"Error running fio: {result.stderr}"
+
+    return render_template('fiojson.html', name=socket.gethostname(), fio_output=fio_output)
     
     
     
