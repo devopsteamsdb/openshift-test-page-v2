@@ -45,7 +45,7 @@ def fio():
     else:
         fio_output = f"Error running fio: {result.stderr}"
 
-    return render_template('fio.html', name=socket.gethostname(), fio_output=fio_output)
+    return render_template('fio.html', name=socket.gethostname(), fio_output=fio_output, fio_command=fio_command)
 
 @app.route('/fiojson')
 def fiojson():
