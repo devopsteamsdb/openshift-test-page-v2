@@ -60,7 +60,7 @@ def fiojson():
     
     conteinername= socket.gethostname()
     
-    fio_command = f"fio --name={conteinername}-{size}-{numjobs} --rw={rw} --blocksize={blocksize} --ioengine={ioengine} --directory={directory} --size={size} --numjobs={numjobs} --runtime={runtime} --output=json"
+    fio_command = f"fio --name={conteinername}-{size}-{numjobs} --rw={rw} --blocksize={blocksize} --ioengine={ioengine} --directory={directory} --size={size} --numjobs={numjobs} --runtime={runtime} --output-format=json"
     result = subprocess.run(fio_command.split(), capture_output=True, text=True)
 
     if result.returncode == 0:
