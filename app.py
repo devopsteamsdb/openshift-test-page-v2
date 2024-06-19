@@ -68,9 +68,13 @@ def fiojson():
     else:
         fio_output = f"Error running fio: {result.stderr}"
 
-    return render_template('fiojson.html', name=socket.gethostname(), fio_output=fio_output)
-    
-    
+    data = fio_output
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
     
 @app.route("/cleanfiles")
 def cleanfiles():
