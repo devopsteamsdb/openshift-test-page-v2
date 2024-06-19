@@ -54,4 +54,4 @@ Write-Host "Average Write Bandwidth (MB/s): $($AVG_WRITE_BW)"
 
 ```
 
-![alt text](image.png)
+![alt text](image-1.png)
