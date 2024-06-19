@@ -47,6 +47,7 @@ def fio():
 
     return render_template('fio.html', name=socket.gethostname(), fio_output=fio_output, fio_command=fio_command)
 
+# add fio json
 @app.route('/fiojson')
 def fiojson():
     size = request.args.get('size')
@@ -75,6 +76,7 @@ def fiojson():
         mimetype='application/json'
     )
     return response
+
     
 @app.route("/cleanfiles")
 def cleanfiles():
