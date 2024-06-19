@@ -9,16 +9,20 @@ via https://labs.play-with-docker.com
 
 ```powershell
 
-$NUMFILES = 100
-$FioOutputString = Invoke-RestMethod -Uri "http://192.168.201.129:8080/fiojson?size=1m&numjobs=$($NUMFILES)&rw=randrw&blocksize=64k&ioengine=libaio&directory=/tmp&runtime=60"
+
+$NUMFILES = 5
+$FioOutputString = Invoke-RestMethod -Uri "http://192.168.201.129:8080/fiojson?size=100m&numjobs=$($NUMFILES)&rw=randrw&blocksize=64k&ioengine=libaio&directory=/tmp&runtime=60"
 $FioOutputObj = $FioOutputString | ConvertFrom-Json
 
-$TOTAL_READ_IOPS  = $FioOutputObj.jobs[0].read.iops
-$TOTAL_WRITE_IOPS = $FioOutputObj.jobs[0].write.iops
-$TOTAL_READ_BW    = $FioOutputObj.jobs[0].read.bw / 1024
-$TOTAL_WRITE_BW   = $FioOutputObj.jobs[0].write.bw / 1024
+$TOTAL_READ_IOPS  = $FioOutputObj.jobs.read.iops | measure -Sum | select -ExpandProperty sum
+$TOTAL_WRITE_IOPS = $FioOutputObj.jobs.write.iops | measure -Sum | select -ExpandProperty sum
+$TOTAL_READ_BW    = ($FioOutputObj.jobs.read.bw | measure -Sum | select -ExpandProperty sum) / 1024
+$TOTAL_WRITE_BW   = ($FioOutputObj.jobs.write.bw | measure -Sum | select -ExpandProperty sum) / 1024
 
 Clear-Host
+
+
+#Write-Host "-------------------------------- Results --------------------------------"
 
 $str = @"
 
