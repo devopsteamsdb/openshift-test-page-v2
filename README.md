@@ -11,7 +11,7 @@ via https://labs.play-with-docker.com
 
 
 $NUMFILES = 5
-$FioOutputString = Invoke-RestMethod -Uri "http://192.168.201.129:8080/fiojson?size=100m&numjobs=$($NUMFILES)&rw=randrw&blocksize=64k&ioengine=libaio&directory=/tmp&runtime=60"
+$FioOutputString = Invoke-RestMethod -Uri "http://192.168.201.129:8080/fiojson?size=500m&numjobs=$($NUMFILES)&rw=rw&blocksize=4k&ioengine=libaio&directory=/tmp&runtime=60"
 $FioOutputObj = $FioOutputString | ConvertFrom-Json
 
 $TOTAL_READ_IOPS  = $FioOutputObj.jobs.read.iops | measure -Sum | select -ExpandProperty sum
