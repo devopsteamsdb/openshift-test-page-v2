@@ -142,7 +142,7 @@ def fio():
     
     rw = request.args.get('rw') or 'rw'
     blocksize = request.args.get('blocksize') or '4k'
-    ioengine = request.args.get('ioengine') or 'libaio'
+    ioengine = request.args.get('ioengine') or 'sync'
     directory = request.args.get('directory') or '/tmp'
     runtime = request.args.get('runtime') or '30'
     
@@ -155,7 +155,8 @@ def fio():
         if result.returncode == 0:
             fio_output = result.stdout
         else:
-            fio_output = f"Error running fio: {result.stderr}"
+            error_detail = result.stderr.strip() or result.stdout.strip() or f"exit code {result.returncode}"
+            fio_output = f"Error running fio: {error_detail}"
     except FileNotFoundError:
         # Generate simulated textual FIO output
         jobs_cnt = int(numjobs) if numjobs else 1
@@ -182,7 +183,7 @@ def fiojson():
     
     rw = request.args.get('rw') or 'rw'
     blocksize = request.args.get('blocksize') or '4k'
-    ioengine = request.args.get('ioengine') or 'libaio'
+    ioengine = request.args.get('ioengine') or 'sync'
     directory = request.args.get('directory') or '/tmp'
     runtime = request.args.get('runtime') or '30'
     
@@ -195,7 +196,8 @@ def fiojson():
         if result.returncode == 0:
             fio_output = result.stdout
         else:
-            fio_output = f"Error running fio: {result.stderr}"
+            error_detail = result.stderr.strip() or result.stdout.strip() or f"exit code {result.returncode}"
+            fio_output = f"Error running fio: {error_detail}"
     except FileNotFoundError:
         # Return simulated JSON
         fio_output = generate_mock_fio_json(size, numjobs, rw, blocksize, ioengine, directory, runtime)

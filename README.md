@@ -18,7 +18,7 @@ Runs a benchmark using `fio` and returns the raw JSON results directly (without 
 - `numjobs` (default: `1`): number of thread/job instances (e.g. `5`).
 - `rw` (default: `rw`): read/write workload pattern (`rw`, `randrw`, `read`, `write`).
 - `blocksize` (default: `4k`): I/O block size (e.g. `4k`, `16k`, `64k`).
-- `ioengine` (default: `libaio`): I/O engine to use (`libaio`, `sync`, `mmap`).
+- `ioengine` (default: `sync`): I/O engine to use (`libaio`, `sync`, `mmap`).
 - `directory` (default: `/tmp`): target directory for the benchmark files.
 - `runtime` (default: `30`): stress test duration in seconds (e.g. `60`).
 
@@ -27,7 +27,7 @@ Runs a benchmark using `fio` and returns the raw JSON results directly (without 
 ```powershell
 $NUMFILES = 5
 # Query the raw JSON API directly - the response is parsed automatically into an object
-$FioOutputObj = Invoke-RestMethod -Uri "http://192.168.201.129:8080/fiojson?size=500m&numjobs=$($NUMFILES)&rw=rw&blocksize=4k&ioengine=libaio&directory=/tmp&runtime=60"
+$FioOutputObj = Invoke-RestMethod -Uri "http://192.168.201.129:8080/fiojson?size=500m&numjobs=$($NUMFILES)&rw=rw&blocksize=4k&ioengine=sync&directory=/tmp&runtime=60"
 
 $TOTAL_READ_IOPS  = $FioOutputObj.jobs.read.iops | measure -Sum | select -ExpandProperty sum
 $TOTAL_WRITE_IOPS = $FioOutputObj.jobs.write.iops | measure -Sum | select -ExpandProperty sum
