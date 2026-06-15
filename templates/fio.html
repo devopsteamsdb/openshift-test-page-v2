@@ -1,7 +1,93 @@
-<pre>
-{{ fio_command }}
-</pre>
-
-<pre>
-{{ fio_output }}
-</pre>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FIO Raw Benchmark Output</title>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #d1d5db;
+            font-family: monospace;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .terminal-header {
+            background: #0e1219;
+            padding: 0.75rem 1rem;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .terminal-dot.red { background: #ef4444; }
+        .terminal-dot.yellow { background: #f59e0b; }
+        .terminal-dot.green { background: #10b981; }
+        .terminal-body {
+            background: #030508;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 0 8px 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        .command {
+            color: #60a5fa;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            color: #34d399;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            color: white;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="terminal-header">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+            <span style="font-size: 0.8rem; margin-left: 10px; color: #9ca3af;">fio_run_output.log</span>
+        </div>
+        <div class="terminal-body">
+            <div class="command">$ {{ fio_command }}</div>
+            <pre>{{ fio_output }}</pre>
+        </div>
+        <a href="/" class="btn-back">&larr; Return to Dashboard</a>
+    </div>
+</body>
+</html>
