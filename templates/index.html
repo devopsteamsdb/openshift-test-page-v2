@@ -1333,19 +1333,19 @@
                 Single File stress tests
             </div>
             <div class="preset-grid">
-                <button class="benchmark-preset-btn" onclick="runPreset('100m', '1', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('100m', '1', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">100 MB File</span>
                     <span class="preset-desc">Small sequential test</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('500m', '1', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('500m', '1', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">500 MB File</span>
                     <span class="preset-desc">Medium sequential test</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('1g', '1', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('1g', '1', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">1 GB File</span>
                     <span class="preset-desc">Large sequential test</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('5g', '1', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('5g', '1', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">5 GB File</span>
                     <span class="preset-desc">Very Large stress test</span>
                 </button>
@@ -1357,23 +1357,23 @@
                 Multiple Files stress tests (Parallel threads)
             </div>
             <div class="preset-grid">
-                <button class="benchmark-preset-btn" onclick="runPreset('100k', '100', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('100k', '100', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">100k - 100 Files</span>
                     <span class="preset-desc">Small parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('1m', '100', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('1m', '100', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">1MB - 100 Files</span>
                     <span class="preset-desc">Medium parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('10m', '50', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('10m', '50', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">10MB - 50 Files</span>
                     <span class="preset-desc">Large parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('100m', '20', 'rw', '4k', 'libaio', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('100m', '20', 'rw', '4k', 'sync', '/tmp', '30')">
                     <span class="preset-name">100MB - 20 Files</span>
                     <span class="preset-desc">Heavy parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('500m', '10', 'rw', '4k', 'libaio', '/tmp', '30')" style="grid-column: span 2;">
+                <button class="benchmark-preset-btn" onclick="runPreset('500m', '10', 'rw', '4k', 'sync', '/tmp', '30')" style="grid-column: span 2;">
                     <span class="preset-name">500MB - 10 Files</span>
                     <span class="preset-desc">Extreme parallel workload</span>
                 </button>
@@ -1445,8 +1445,8 @@
                         <div class="form-group">
                             <label for="ioengine">I/O Engine</label>
                             <select id="ioengine">
-                                <option value="libaio" selected>libaio</option>
-                                <option value="sync">sync</option>
+                                <option value="libaio">libaio</option>
+                                <option value="sync" selected>sync</option>
                                 <option value="mmap">mmap</option>
                                 <option value="posixaio">posixaio</option>
                             </select>
@@ -2159,6 +2159,19 @@
         fIsIntense = intense;
         startFireworksSpawner();
     }
+    
+    // Pause spawner and clear particles when page is in background to prevent accumulation lag
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (fSpawnerInterval) {
+                clearInterval(fSpawnerInterval);
+                fSpawnerInterval = null;
+            }
+            fParticles = [];
+        } else {
+            startFireworksSpawner();
+        }
+    });
 
     // Initialize Page features
     window.addEventListener('DOMContentLoaded', () => {
