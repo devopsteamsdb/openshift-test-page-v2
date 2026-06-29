@@ -1312,7 +1312,7 @@
                     <circle cx="50" cy="50" r="15" fill="rgba(255,255,255,0.1)" />
                 </svg>
                 <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Stressing Storage Node</h2>
-                <p style="color: var(--text-muted); font-size: 0.95rem;" id="loader-timer">Executing benchmark: 0s / 30s</p>
+                <p style="color: var(--text-muted); font-size: 0.95rem;" id="loader-timer">Executing benchmark: 0s / 120s</p>
                 <div class="progress-bar-container">
                     <div class="progress-bar-fill" id="progress-fill"></div>
                 </div>
@@ -1333,19 +1333,19 @@
                 Single File stress tests
             </div>
             <div class="preset-grid">
-                <button class="benchmark-preset-btn" onclick="runPreset('100m', '1', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('100m', '1', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">100 MB File</span>
                     <span class="preset-desc">Small sequential test</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('500m', '1', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('500m', '1', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">500 MB File</span>
                     <span class="preset-desc">Medium sequential test</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('1g', '1', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('1g', '1', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">1 GB File</span>
                     <span class="preset-desc">Large sequential test</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('5g', '1', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('5g', '1', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">5 GB File</span>
                     <span class="preset-desc">Very Large stress test</span>
                 </button>
@@ -1357,23 +1357,23 @@
                 Multiple Files stress tests (Parallel threads)
             </div>
             <div class="preset-grid">
-                <button class="benchmark-preset-btn" onclick="runPreset('100k', '100', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('100k', '100', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">100k - 100 Files</span>
                     <span class="preset-desc">Small parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('1m', '100', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('1m', '100', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">1MB - 100 Files</span>
                     <span class="preset-desc">Medium parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('10m', '50', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('10m', '50', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">10MB - 50 Files</span>
                     <span class="preset-desc">Large parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('100m', '20', 'rw', '4k', 'sync', '/tmp', '30')">
+                <button class="benchmark-preset-btn" onclick="runPreset('100m', '20', 'rw', '4k', 'sync', '/tmp', '120')">
                     <span class="preset-name">100MB - 20 Files</span>
                     <span class="preset-desc">Heavy parallel threads</span>
                 </button>
-                <button class="benchmark-preset-btn" onclick="runPreset('500m', '10', 'rw', '4k', 'sync', '/tmp', '30')" style="grid-column: span 2;">
+                <button class="benchmark-preset-btn" onclick="runPreset('500m', '10', 'rw', '4k', 'sync', '/tmp', '120')" style="grid-column: span 2;">
                     <span class="preset-name">500MB - 10 Files</span>
                     <span class="preset-desc">Extreme parallel workload</span>
                 </button>
@@ -1456,9 +1456,9 @@
                             <label for="runtime">Stressing Duration</label>
                             <select id="runtime">
                                 <option value="10">10 Seconds</option>
-                                <option value="30" selected>30 Seconds</option>
+                                <option value="30">30 Seconds</option>
                                 <option value="60">60 Seconds</option>
-                                <option value="120">120 Seconds</option>
+                                <option value="120" selected>120 Seconds</option>
                             </select>
                         </div>
 

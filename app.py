@@ -144,7 +144,7 @@ def fio():
     blocksize = request.args.get('blocksize') or '4k'
     ioengine = request.args.get('ioengine') or 'sync'
     directory = request.args.get('directory') or '/tmp'
-    runtime = request.args.get('runtime') or '30'
+    runtime = request.args.get('runtime') or '120'
     
     conteinername = socket.gethostname()
     
@@ -185,7 +185,7 @@ def fiojson():
     blocksize = request.args.get('blocksize') or '4k'
     ioengine = request.args.get('ioengine') or 'sync'
     directory = request.args.get('directory') or '/tmp'
-    runtime = request.args.get('runtime') or '30'
+    runtime = request.args.get('runtime') or '120'
     
     conteinername = socket.gethostname()
     

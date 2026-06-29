@@ -20,7 +20,7 @@ Runs a benchmark using `fio` and returns the raw JSON results directly (without 
 - `blocksize` (default: `4k`): I/O block size (e.g. `4k`, `16k`, `64k`).
 - `ioengine` (default: `sync`): I/O engine to use (`libaio`, `sync`, `mmap`).
 - `directory` (default: `/tmp`): target directory for the benchmark files.
-- `runtime` (default: `30`): stress test duration in seconds (e.g. `60`).
+- `runtime` (default: `120`): stress test duration in seconds (e.g. `60`).
 
 ### PowerShell Example
 
