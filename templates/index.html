@@ -1239,8 +1239,11 @@
         </div>
         <div class="header-right">
             <span class="pod-name">Pod: {{ name }}</span>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
                 <svg id="theme-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"></svg>
+            </button>
+            <button id="fireworks-toggle" class="theme-toggle-btn" aria-label="Toggle Fireworks" title="Toggle Fireworks">
+                <svg id="fireworks-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"></svg>
             </button>
         </div>
     </header>
@@ -2031,6 +2034,53 @@
     let fParticles = [];
     let fSpawnerInterval = null;
     let fIsIntense = false;
+    let fEnabled = true;
+
+    const fireworksToggle = document.getElementById('fireworks-toggle');
+    const fireworksIcon = document.getElementById('fireworks-icon');
+
+    const fireworksOnIcon = `<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21L8.188 15.904L3 15L8.188 14.096L9 9L9.813 14.096L15 15L9.813 15.904ZM19.071 4.929l-.707.707M12 1v1M4.929 4.929l.707.707M1.5 12h1m2.722 6.364l.707-.707M12 22v1m6.364-2.722l-.707-.707M21.5 12h1"></path>`;
+    const fireworksOffIcon = `<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21L8.188 15.904L3 15L8.188 14.096L9 9L9.813 14.096L15 15L9.813 15.904ZM19.071 4.929l-.707.707M12 1v1M4.929 4.929l.707.707M1.5 12h1m2.722 6.364l.707-.707M12 22v1m6.364-2.722l-.707-.707M21.5 12h1 M3 3l18 18"></path>`;
+
+    function initFireworks() {
+        const savedFireworks = localStorage.getItem('fireworks') || 'enabled';
+        if (savedFireworks === 'disabled') {
+            fEnabled = false;
+            fCanvas.style.display = 'none';
+            fireworksIcon.innerHTML = fireworksOffIcon;
+            if (fSpawnerInterval) {
+                clearInterval(fSpawnerInterval);
+                fSpawnerInterval = null;
+            }
+            fParticles = [];
+        } else {
+            fEnabled = true;
+            fCanvas.style.display = 'block';
+            fireworksIcon.innerHTML = fireworksOnIcon;
+        }
+    }
+
+    fireworksToggle.addEventListener('click', () => {
+        fEnabled = !fEnabled;
+        if (fEnabled) {
+            localStorage.setItem('fireworks', 'enabled');
+            fireworksIcon.innerHTML = fireworksOnIcon;
+            fCanvas.style.display = 'block';
+            startFireworksSpawner();
+            showToast("Fireworks Enabled");
+        } else {
+            localStorage.setItem('fireworks', 'disabled');
+            fireworksIcon.innerHTML = fireworksOffIcon;
+            fCanvas.style.display = 'none';
+            if (fSpawnerInterval) {
+                clearInterval(fSpawnerInterval);
+                fSpawnerInterval = null;
+            }
+            fParticles = [];
+            fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
+            showToast("Fireworks Disabled");
+        }
+    });
     
     function resizeFireworksCanvas() {
         fCanvas.width = window.innerWidth;
@@ -2139,6 +2189,7 @@
     
     function startFireworksSpawner() {
         if (fSpawnerInterval) clearInterval(fSpawnerInterval);
+        if (!fEnabled) return;
         
         // Spawn interval: 700ms in normal mode, 120ms in intense mode
         const delay = fIsIntense ? 120 : 700;
@@ -2157,7 +2208,9 @@
     
     function setIntenseFireworks(intense) {
         fIsIntense = intense;
-        startFireworksSpawner();
+        if (fEnabled) {
+            startFireworksSpawner();
+        }
     }
     
     // Pause spawner and clear particles when page is in background to prevent accumulation lag
@@ -2169,17 +2222,20 @@
             }
             fParticles = [];
         } else {
-            startFireworksSpawner();
+            if (fEnabled) {
+                startFireworksSpawner();
+            }
         }
     });
 
     // Initialize Page features
     window.addEventListener('DOMContentLoaded', () => {
         initTheme();
+        initFireworks();
         animateDials();
         loadHistory();
         resizeFireworksCanvas();
-        startFireworksSpawner();
+        if (fEnabled) startFireworksSpawner();
         drawFireworks();
     });
 </script>
